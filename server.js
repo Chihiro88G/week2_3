@@ -1,0 +1,39 @@
+const http = require('http');
+const fs = require('fs');
+
+const hostname = '127.0.0.1';
+const port = 3000;
+
+
+const server = http.createServer((req, res) => {
+
+    let filepath = __dirname + '/dir1/index.html';
+    console.log(req.url);
+    // res.statusCode = 200;
+    // res.setHeader('Content-Type', 'text/plain');
+    // res.end('Hey Hello World');
+
+    switch (req.url) {
+
+        case '/aboutus':
+            filepath = __dirname + '/dir1/aboutus.html';
+            break;
+        default:
+            filepath = __dirname + '/dir1/index.html';
+            break;
+    }
+    fs.readFile(filepath, (err, data) => {
+        res.statusCode = 200;
+        res.setHeader('Content-Type', 'text/html');
+        res.end(data, 'utf8');
+    });
+});
+
+server.listen(port, hostname, () => {
+    console.log(`Server running at http://${hostname}:${port}/`);
+});
+
+
+// res.statusCode = 200;
+// res.setHeader('Content-Type', 'text/html');
+// res.end(data, 'utf8');
